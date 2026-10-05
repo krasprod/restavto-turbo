@@ -167,6 +167,19 @@ nav.main a:hover::after{transform:scaleX(1)}
 .form .btn{width:100%;margin-top:6px}
 .form small{display:block;text-align:center;font-size:12.5px;color:var(--muted);margin-top:12px}
 .form .ok{display:none;text-align:center;padding:30px 10px}
+/* картка закладу поверх карти (свій варіант, без ключа Google) */
+.map{position:relative}
+.gcard{position:absolute;left:16px;top:16px;z-index:2;width:270px;max-width:calc(100% - 32px);
+  background:#fff;border-radius:14px;box-shadow:0 10px 30px rgba(11,15,10,.18);padding:16px 18px}
+.gcard b{display:block;font:800 15px/1.3 var(--font-h);color:var(--ink);margin-bottom:6px}
+.gcard p{margin:0 0 8px;font-size:13.5px;line-height:1.45;color:var(--muted)}
+.gcard .rate{display:flex;align-items:center;gap:6px;font-size:13.5px;color:var(--ink);margin-bottom:10px}
+.gcard .rate i{color:#f5a623;font-style:normal;letter-spacing:1px}
+.gcard .rate span{color:var(--muted)}
+.gcard a{display:inline-flex;align-items:center;gap:6px;font:700 13.5px var(--font-h);
+  color:var(--green-text);text-decoration:none}
+.gcard a:hover{text-decoration:underline}
+@media (max-width:640px){.gcard{position:static;width:auto;max-width:none;margin:0 0 12px;box-shadow:none;border:1px solid var(--line)}}
 .form .ok svg{width:56px;height:56px;stroke:var(--green);margin:0 auto 14px}
 .form.sent form{display:none}.form.sent .ok{display:block}
 
@@ -349,6 +362,19 @@ footer .bottom{display:flex;justify-content:space-between;gap:20px;padding-top:2
 .strip figcaption{padding:14px 16px}
 .strip b{display:block;font:700 16px var(--font-h);color:var(--ink);margin-bottom:4px}
 .strip span{font-size:14px;color:var(--muted)}
+/* картка закладу поверх карти (свій варіант, без ключа Google) */
+.map{position:relative}
+.gcard{position:absolute;left:16px;top:16px;z-index:2;width:270px;max-width:calc(100% - 32px);
+  background:#fff;border-radius:14px;box-shadow:0 10px 30px rgba(11,15,10,.18);padding:16px 18px}
+.gcard b{display:block;font:800 15px/1.3 var(--font-h);color:var(--ink);margin-bottom:6px}
+.gcard p{margin:0 0 8px;font-size:13.5px;line-height:1.45;color:var(--muted)}
+.gcard .rate{display:flex;align-items:center;gap:6px;font-size:13.5px;color:var(--ink);margin-bottom:10px}
+.gcard .rate i{color:#f5a623;font-style:normal;letter-spacing:1px}
+.gcard .rate span{color:var(--muted)}
+.gcard a{display:inline-flex;align-items:center;gap:6px;font:700 13.5px var(--font-h);
+  color:var(--green-text);text-decoration:none}
+.gcard a:hover{text-decoration:underline}
+@media (max-width:640px){.gcard{position:static;width:auto;max-width:none;margin:0 0 12px;box-shadow:none;border:1px solid var(--line)}}
 .form .err{display:block;margin-top:10px;color:#b3261e;font-size:14px;text-align:center}
 @media (max-width:1024px){.strip{grid-template-columns:repeat(3,1fr)}.strip img{height:170px}}
 @media (max-width:640px){.strip{grid-template-columns:1fr}.strip img{height:220px}}
@@ -703,7 +729,7 @@ footer .bottom{display:flex;justify-content:space-between;gap:20px;padding-top:2
           <a class="btn btn-outline" href="https://www.google.com/maps/dir/?api=1&destination=%D0%9B%D1%8C%D0%B2%D1%96%D0%B2%2C+%D0%B2%D1%83%D0%BB.+%D0%93%D1%80%D1%83%D0%BD%D1%82%D0%BE%D0%B2%D0%B0%2C+1%D0%B1" target="_blank" rel="noopener">Прокласти маршрут</a>
         </div>
       </div>
-      <div class="map"><iframe loading="lazy" title="Rest Avto на мапі" src="https://www.google.com/maps/embed?origin=mfe&amp;pb=!1m3!2m1!1s49.7815782,24.0712667!6i17!3m1!1suk!5m1!1suk"></iframe></div>
+      <div class="map"><div class="gcard"><b>REST AVTO</b><p>Реставрація рульових рейок, насосів ГПК, турбін. СТО, автосервіс<br>вул. Грунтова, 1б, Львів<br>Пн–Сб, 9:00–18:00</p><div class="rate">4,5 <i>★★★★★</i> <span>371 відгук</span></div><a href="https://maps.app.goo.gl/HUG4TYdgAisS7MVb8" target="_blank" rel="noopener">Відкрити в Google Картах</a></div><iframe loading="lazy" title="Rest Avto на мапі" src="https://www.google.com/maps/embed?origin=mfe&amp;pb=!1m3!2m1!1s49.7815782,24.0712667!6i17!3m1!1suk!5m1!1suk"></iframe></div>
     </div>
   </div>
 </section>
