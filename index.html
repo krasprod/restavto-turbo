@@ -762,7 +762,7 @@ footer .bottom{display:flex;justify-content:space-between;gap:20px;padding-top:2
       <input type="text" name="email_confirm" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
       <h3 id="mtitle">Записатись</h3>
       <p class="sub">Залиште номер, передзвонимо в робочі години і домовимось про зручний час візиту.</p>
-      <div class="field"><label for="m-name">Ваше імʼя</label><input id="m-name" name="name" type="text" autocomplete="name" placeholder="Як до вас звертатись"></div>
+      <div class="field"><label for="m-name">Ваше імʼя</label><input id="m-name" name="name" type="text" required autocomplete="name" placeholder="Як до вас звертатись"></div>
       <div class="field"><label for="m-phone">Телефон</label><input id="m-phone" name="phone" type="tel" required autocomplete="tel" placeholder="+380"></div>
       <div class="field"><label for="m-note">Авто і що турбує</label><textarea id="m-note" name="note" placeholder="Напр. Sprinter 2.2 CDI, свист на розгоні"></textarea></div>
       <button class="btn btn-primary" type="submit">Записатись</button>
@@ -780,6 +780,20 @@ footer .bottom{display:flex;justify-content:space-between;gap:20px;padding-top:2
   window.addEventListener('scroll',function(){header.classList.toggle('scrolled',window.scrollY>10)});
   var burger=document.getElementById('burger'),mnav=document.getElementById('mnav');
   burger.addEventListener('click',function(){mnav.classList.toggle('open')});
+
+  function phDigits(v){var d=String(v||'').replace(/\D/g,'');
+    if(d.indexOf('380')===0){d=d.slice(3)}else if(d.indexOf('0')===0){d=d.slice(1)}
+    if(d.length>9){d=d.slice(-9)} return d}
+  function phFormat(v){var d=phDigits(v),o='+380';
+    if(d.length)o+=' '+d.slice(0,2); if(d.length>2)o+=' '+d.slice(2,5);
+    if(d.length>5)o+=' '+d.slice(5,7); if(d.length>7)o+=' '+d.slice(7,9); return o}
+  document.querySelectorAll('input[type=tel]').forEach(function(i){
+    i.setAttribute('inputmode','tel'); i.placeholder='+380 XX XXX XX XX'; i.maxLength=19;
+    i.addEventListener('focus',function(){if(!i.value)i.value='+380 '});
+    i.addEventListener('input',function(){i.value=phFormat(i.value)});
+    i.addEventListener('blur',function(){if(!phDigits(i.value))i.value=''});
+  });
+
   mnav.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){mnav.classList.remove('open')})});
   var modal=document.getElementById('modal'),mtitle=document.getElementById('mtitle');
   document.querySelectorAll('[data-open]').forEach(function(b){b.addEventListener('click',function(){
@@ -800,7 +814,9 @@ footer .bottom{display:flex;justify-content:space-between;gap:20px;padding-top:2
     if(!err){err=document.createElement('p');err.className='err';box.appendChild(err)}
     err.textContent='';
     var phone=val(f,'phone');
-    if(phone.replace(/\D/g,'').length<9){err.textContent='Перевірте, будь ласка, номер телефону.';return}
+    if(phDigits(phone).length!==9){err.textContent='Вкажіть номер у форматі +380 XX XXX XX XX.';return}
+    var cname=val(f,'cname')||val(f,'name');
+    if(!cname){err.textContent='Напишіть, будь ласка, як до вас звертатись.';return}
 
     var parts=[];
     var vin=val(f,'vin'); if(vin){parts.push('Турбіна / авто: '+vin)}
@@ -811,8 +827,8 @@ footer .bottom{display:flex;justify-content:space-between;gap:20px;padding-top:2
     if(location.hostname!==PROD){box.classList.add('sent');f.reset();return}
 
     var fd=new FormData();
-    fd.append('callback-name', val(f,'cname')||val(f,'name')||'Заявка з сайту');
-    fd.append('callback-phone', phone);
+    fd.append('callback-name', cname);
+    fd.append('callback-phone', '+380'+phDigits(phone));
     fd.append('callback-message', parts.join('. '));
     fd.append('form_type', f.getAttribute('data-form-type')||'1');
     fd.append('email_confirm', val(f,'email_confirm'));
